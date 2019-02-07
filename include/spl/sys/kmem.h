@@ -28,6 +28,12 @@
 #include <sys/debug.h>
 #include <linux/slab.h>
 #include <linux/sched.h>
+#include <linux/mm.h>
+#include <linux/vmalloc.h>
+#include <linux/slab.h>
+void *spl_kvmalloc(size_t size, gfp_t flags);
+void spl_kvfree(const void *addr);
+
 
 extern int kmem_debugging(void);
 extern char *kmem_vasprintf(const char *fmt, va_list ap);
@@ -43,6 +49,7 @@ extern void strfree(char *str);
 #define	KM_PUSHPAGE	0x0004	/* can block for memory; may use reserve */
 #define	KM_ZERO		0x1000	/* zero the allocation */
 #define	KM_VMEM		0x2000	/* caller is vmem_* wrapper */
+#define	KM_KVMEM	0x4000	/* caller is kvmem_* wrapper */
 
 #define	KM_PUBLIC_MASK	(KM_SLEEP | KM_NOSLEEP | KM_PUSHPAGE)
 
